@@ -10,14 +10,14 @@ class WarpSelectionAnimation: ColorPickerSelection {
     
     var selectedRingView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.colorWithHexString("39B0BA").CGColor
+        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
         view.layer.borderWidth = 2
         return view
     }()
     
     var tempRingView: UIView =  {
         let view = UIView()
-        view.layer.borderColor = UIColor.colorWithHexString("39B0BA").CGColor
+        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
         view.layer.borderWidth = 2
         return view
     }()
@@ -30,7 +30,7 @@ class WarpSelectionAnimation: ColorPickerSelection {
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             self.selectedRingView = self.tempRingView
             self.tempRingView = UIView()
-            self.tempRingView.layer.borderColor = UIColor.greenColor().CGColor
+            self.tempRingView.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
             self.tempRingView.layer.borderWidth = 2
         }
     }
