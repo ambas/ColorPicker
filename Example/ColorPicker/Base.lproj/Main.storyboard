@@ -32,23 +32,52 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yQM-aP-Pww">
-                                <rect key="frame" x="81" y="75" width="186" height="29"/>
+                                <rect key="frame" x="119" y="79" width="186" height="29"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                    <segment title=""/>
+                                    <segment title="Left"/>
+                                    <segment title="Center"/>
+                                    <segment title="Right"/>
                                 </segments>
                                 <connections>
                                     <action selector="didChangeAlignMent:" destination="vXZ-lx-hvc" eventType="valueChanged" id="dg2-Kl-laQ"/>
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uz8-G8-HDr">
-                                <rect key="frame" x="28" y="115" width="30" height="30"/>
+                                <rect key="frame" x="28" y="149" width="30" height="30"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="addColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ujq-Ei-Ui8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tXH-su-beB">
+                                <rect key="frame" x="74" y="149" width="64" height="30"/>
+                                <state key="normal" title="Remove"/>
+                                <connections>
+                                    <action selector="removeColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0US-4o-AnM"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Alignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JH-Ct-jqZ">
+                                <rect key="frame" x="28" y="82" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCi-u9-VSm">
+                                <rect key="frame" x="20" y="187" width="118" height="99"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NFU-ty-lCk">
+                                <rect key="frame" x="167" y="115" width="51" height="31"/>
+                                <connections>
+                                    <action selector="changeAllowDeselect:" destination="vXZ-lx-hvc" eventType="valueChanged" id="U6N-9n-651"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow Deselect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Tq-bt-pqA">
+                                <rect key="frame" x="28" y="120" width="113" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -61,7 +90,9 @@
                     <navigationItem key="navigationItem" id="K6h-xw-dnD"/>
                     <connections>
                         <outlet property="alignmentOption" destination="yQM-aP-Pww" id="0G1-Xy-ycR"/>
+                        <outlet property="allowDeselectSwitch" destination="NFU-ty-lCk" id="6n0-w6-HnS"/>
                         <outlet property="colorPicker" destination="3N6-hM-vBS" id="Tkv-3P-dOf"/>
+                        <outlet property="colorView" destination="CCi-u9-VSm" id="CH7-fF-pLo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

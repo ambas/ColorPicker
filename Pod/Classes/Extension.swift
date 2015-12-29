@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     private static func component(color: String) -> CGFloat {
         guard let subString = UInt(color, radix: 16) else {
             assertionFailure("Wrong Hex color format for \(color)")
@@ -18,7 +18,7 @@ extension UIColor {
         return CGFloat(subString) / 255
     }
     
-    static func colorWithHexString(colorHexString: String) -> UIColor {
+    public static func colorWithHexString(colorHexString: String) -> UIColor {
         let isIncludeSharp = colorHexString.characters.first == "#"
         let colorHexAfterCondition = isIncludeSharp ? colorHexString.characters.split{$0 == "#"}.map(String.init).last : colorHexString
         guard let _colorHexAfterCondition = colorHexAfterCondition where _colorHexAfterCondition.characters.count == 6 || _colorHexAfterCondition.characters.count == 3 else {
@@ -32,7 +32,7 @@ extension UIColor {
             alpha: 1)
     }
     
-    func hexString() -> String {
+    public func hexString() -> String {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0

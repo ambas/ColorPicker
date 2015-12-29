@@ -21,7 +21,7 @@ class ColorPickerSpec: QuickSpec {
         
         describe("test color picker selection") {
             it("should select correct color") {
-               colorPickerListView.selectColor(colors[0])
+                colorPickerListView.selectColor(colors[0])
                 let selectedButton = colorPickerListView.selectedButton!
                 expect(UIColor(CGColor: selectedButton.roundShape.fillColor!).hexString()) == colors[0]
             }
@@ -52,6 +52,23 @@ class ColorPickerSpec: QuickSpec {
                 colorPickerListView.selectColor(colors[1])
                 selectedButton = colorPickerListView.selectedButton!
                 expect(UIColor(CGColor: selectedButton.roundShape.fillColor!).hexString()) == colors[1]
+            }
+            
+            it("should have correct buttons when changed colors") {
+                let newColor = ["#C885D0", "#3CAEE2", "#5EB566", "#FAC16C", "#FA787F", "#A56250"]
+                colorPickerListView.colors = newColor
+                let button1 = colorPickerListView.colorButtonAt(4)
+                expect(UIColor(CGColor: button1.roundShape.fillColor!).hexString()) == newColor[4]
+                let button2 = colorPickerListView.colorButtonAt(5)
+                expect(UIColor(CGColor: button2.roundShape.fillColor!).hexString()) == newColor[5]
+            }
+            
+            it("should remove selected button when that color are removed") {
+                colorPickerListView.selectButtonAtIndex(1)
+                let selectedButton = colorPickerListView.selectedButton!
+                expect(UIColor(CGColor: selectedButton.roundShape.fillColor!).hexString()) == colors[1]
+                colorPickerListView.colors.popLast()
+                expect(colorPickerListView.selectedButton).to(beNil())
             }
             
         }

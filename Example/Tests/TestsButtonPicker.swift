@@ -10,7 +10,7 @@ import Quick
 import Nimble
 @testable import ColorPicker
 
-class TableOfContentsSpec: QuickSpec {
+class ColorPickerButtonSpec: QuickSpec {
     override func spec() {
         let colors = [ "#3CAEE2", "#C885D0"]
         var colorPickerListView: ColorPickerListView!
@@ -78,7 +78,7 @@ class TableOfContentsSpec: QuickSpec {
                 colorPickerListView = ColorPickerListView(frame: CGRect(x: 0, y: 0, width: 100, height: 44), colors: colors)
                 colorPickerListView.alignment = "right"
                 let leftPadding = 100 - (44*2)
-               let firstButton = colorPickerListView.colorButtonAt(0)
+                let firstButton = colorPickerListView.colorButtonAt(0)
                 let secondButton = colorPickerListView.colorButtonAt(1)
                 expect(firstButton.frame) == CGRect(x: leftPadding, y: 0, width: 44, height: 44)
                  expect(secondButton.frame) == CGRect(x: leftPadding + 44, y: 0, width: 44, height: 44)

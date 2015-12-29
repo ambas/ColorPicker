@@ -9,7 +9,8 @@
 import UIKit
 
 public protocol ColorPickerDelegate {
-    func colorPicker(colorPicker: ColorPickerListView, didSelectColor: String)
+    func colorPicker(colorPicker: ColorPickerListView, selectedColor: String)
+    func colorPicker(colorPicker: ColorPickerListView, deselectedColor: String)
 }
 
 @IBDesignable
@@ -18,6 +19,7 @@ public class ColorPickerListView: UIScrollView {
     
     @IBInspectable public var alignment: String = "left" {
         didSet {
+            layoutIfNeeded()
             setNeedsLayout()
         }
     }
@@ -30,7 +32,18 @@ public class ColorPickerListView: UIScrollView {
       return self.colors.map(ColorPickerButton.init)
     }()
     
-    public var colors = ["#C885D0", "#3CAEE2", "#5EB566", "#FAC16C", "#FA787F", "#A56250"]
+    public var colors = ["#C885D0", "#3CAEE2", "#5EB566", "#FAC16C", "#FA787F", "#A56250"] {
+        didSet {
+            for button in colorPickerButtons {
+                if button == selectedButton {
+                    selectedButton = nil
+                }
+                button.removeFromSuperview()
+            }
+            colorPickerButtons = colors.map(ColorPickerButton.init)
+            configureView()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,16 +51,17 @@ public class ColorPickerListView: UIScrollView {
     
     public init(frame: CGRect, colors:[String]) {
         super.init(frame: frame)
-        configureView(colors)
+        self.colors = colors
+        configureView()
     }
 
     required public init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
-        configureView(colors)
+        configureView()
     }
     
     public override func prepareForInterfaceBuilder() {
-       configureView(colors) 
+       configureView() 
     }
     
     public override func layoutSubviews() {
@@ -79,8 +93,7 @@ public class ColorPickerListView: UIScrollView {
         return self.colorPickerButtons[index]
     }
     
-    private func configureView(colors: [String]) {
-        self.colors = colors
+    private func configureView() {
         self.colorPickerButtons.forEach(self.addSubview)
         for pickerButton in colorPickerButtons {
             self.addSubview(pickerButton)
@@ -106,16 +119,19 @@ public class ColorPickerListView: UIScrollView {
         if let selectedButton = self.selectedButton where allowsDeselection && colorPickerButtons.indexOf(selectedButton)! ==  colorPickerButtonIndex {
             self.selectedButton = nil
             colorSelectionAnimation.colorPicker(self, deselectAtIndex: colorPickerButtonIndex)
+             colorPickerDelegate?.colorPicker(self, deselectedColor: colors[colorPickerButtonIndex])
         } else if let selectedButton = self.selectedButton where colorPickerButtons.indexOf(selectedButton)! ==  colorPickerButtonIndex {
             // Do noting for this case
         } else if let selectedButton = self.selectedButton where colorPickerButtons.indexOf(selectedButton)! !=  colorPickerButtonIndex {
             colorSelectionAnimation.colorPicker(self, changeFromIndex: colorPickerButtons.indexOf(selectedButton)! , toIndex: colorPickerButtonIndex)
             self.selectedButton = colorPickerButton
+            colorPickerDelegate?.colorPicker(self, selectedColor: colors[colorPickerButtonIndex])
         }
         else {
             colorSelectionAnimation.colorPicker(self, selectedAtIndex: colorPickerButtonIndex)
             selectedButton = colorPickerButton
+            colorPickerDelegate?.colorPicker(self, selectedColor: colors[colorPickerButtonIndex])
         }
-        colorPickerDelegate?.colorPicker(self, didSelectColor: colors[colorPickerButtonIndex])
+       
     }
 }
