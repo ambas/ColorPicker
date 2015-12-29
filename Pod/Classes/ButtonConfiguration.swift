@@ -9,5 +9,5 @@
 import UIKit
 
 public struct ButtonCofiguration {
-    
+    public static let pickerButtonRadius = 10.0
 }

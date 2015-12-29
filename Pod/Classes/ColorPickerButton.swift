@@ -9,31 +9,63 @@
 import UIKit
 
 public class ColorPickerButton: UIButton {
-    public init(frame: CGRect, color: UIColor) {
+    
+    let roundShape = CAShapeLayer()
+    var radius: Double  = 0 {
+        didSet {
+            roundShape.path = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).CGPath
+            roundShape.frame = CGRect(x: 0, y: 0, width: radius*2, height: radius*2)
+        }
+    }
+    var color: UIColor = UIColor.blackColor() {
+        didSet {
+            roundShape.fillColor = color.CGColor
+        }
+    }
+    
+    public init(frame: CGRect, color: UIColor, radius: Double) {
         super.init(frame: frame)
-        defaultConfiguration(self, color: nil)
-        self.layer.cornerRadius = cornerRadius(self.frame)
+        configureShape(radius, color: color)
+        self.layer.addSublayer(roundShape)
+    }
+    
+    convenience public init(color: UIColor, radius: Double) {
+        self.init(frame: CGRectZero, color: color, radius: radius)
+    }
+    
+    convenience public init(color: UIColor) {
+        self.init(frame: CGRectZero, color: color, radius: ButtonCofiguration.pickerButtonRadius)
+    }
+    
+    convenience public init(colorHex: String) {
+       self.init(frame: CGRectZero, color: UIColor.colorWithHexString(colorHex), radius: ButtonCofiguration.pickerButtonRadius)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        defaultConfiguration(self, color: nil)
-         self.layer.cornerRadius = cornerRadius(self.frame)
+        configureShape(radius, color: color)
     }
     
     public override func layoutSubviews() {
-         self.layer.cornerRadius = cornerRadius(self.frame)
+        super.layoutSubviews()
+        roundShape.fillColor = color.CGColor
+        roundShape.path = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).CGPath
+        roundShape.bounds.size = CGSize(width: radius*2, height: radius*2)
+        let center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+        roundShape.position = center
     }
     
-    func defaultConfiguration(view: UIView, color: UIColor?) {
-        view.backgroundColor = color
-        view.clipsToBounds = true
+    private func configureShape(radius: Double, color: UIColor) {
+        self.radius = radius
+        self.color = color
     }
     
-    func cornerRadius(frame: CGRect) -> CGFloat {
-        let width = CGRectGetWidth(frame)
-        let height = CGRectGetHeight(frame)
-        let radius = width < height ? width / 2.0 : height / 2.0
-        return radius
+    func pickerColor() -> String {
+        let shapeColor = roundShape.fillColor
+        print(shapeColor)
+        guard let aShapeColor = shapeColor else {
+            return "#000"
+        }
+        return UIColor(CGColor: aShapeColor).hexString()
     }
 }
