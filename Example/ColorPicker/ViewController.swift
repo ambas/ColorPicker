@@ -7,18 +7,29 @@
 //
 
 import UIKit
+import ColorPicker
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet weak var colorPicker: ColorPickerListView!
+    @IBOutlet weak var alignmentOption: UISegmentedControl!
+    
+    @IBAction func didChangeAlignMent(alignmentOption: UISegmentedControl) {
+        switch alignmentOption.selectedSegmentIndex {
+        case 0:
+            colorPicker.alignment = "left"
+        case 1:
+            colorPicker.alignment = "center"
+        case 2:
+            colorPicker.alignment = "right"
+        default:
+           colorPicker.alignment = "left" 
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func addColor(sender: AnyObject) {
+        var colors = colorPicker.colors
+        colors.append("#5EB566")
+        colorPicker.colors = colors
     }
-
 }
 
