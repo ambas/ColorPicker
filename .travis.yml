@@ -8,7 +8,7 @@ xcode_workspace: Example/ColorPicker.xcworkspace
 xcode_scheme: ColorPicker
 
 script:
-- xcodebuild -workspace Example/ColorPicker.xcworkspace -scheme ColorPicker -enableCodeCoverage YES clean build test | xcpretty
+- xcodebuild -workspace Example/ColorPicker.xcworkspace -scheme ColorPicker -enableCodeCoverage YES test | xcpretty
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
