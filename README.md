@@ -9,7 +9,8 @@
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
-![](https://github.com/ambas/ColorPicker/blob/master/sample.gif)
+
+<p align="center"><img src="https://github.com/ambas/ColorPicker/blob/master/sample.gif"/></p>
 
 ## Requirements
 - swift 2.0+
