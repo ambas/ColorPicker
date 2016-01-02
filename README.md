@@ -1,7 +1,7 @@
 # ColorPicker
 
 [![CI Status](http://img.shields.io/travis/ambas/ColorPicker.svg?style=flat)](https://travis-ci.org/ambas/ColorPicker)
-[![codecov.io](https://codecov.io/github/ambas/ColorPicker/coverage.svg?branch=master)](https://codecov.io/github/ambas/ColorPicker/coverage.svg?branch=master)
+[![codecov.io](https://codecov.io/github/ambas/ColorPicker/coverage.svg?branch=master)](https://codecov.io/github/ambas/ColorPicker)
 [![Version](https://img.shields.io/cocoapods/v/ColorPicker.svg?style=flat)](http://cocoapods.org/pods/ColorPicker)
 [![License](https://img.shields.io/cocoapods/l/ColorPicker.svg?style=flat)](http://cocoapods.org/pods/ColorPicker)
 [![Platform](https://img.shields.io/cocoapods/p/ColorPicker.svg?style=flat)](http://cocoapods.org/pods/ColorPicker)
