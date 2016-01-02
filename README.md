@@ -6,11 +6,10 @@
 [![License](https://img.shields.io/cocoapods/l/ColorPicker.svg?style=flat)](http://cocoapods.org/pods/ColorPicker)
 [![Platform](https://img.shields.io/cocoapods/p/ColorPicker.svg?style=flat)](http://cocoapods.org/pods/ColorPicker)
 
-## Usage
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 <p align="center"><img src="https://github.com/ambas/ColorPicker/blob/master/sample.gif"/></p>
+
+## Usage
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
 - swift 2.0+
