@@ -4,11 +4,11 @@ osx_image: xcode7.2
 install:
   - gem install xcpretty
 
-xcode_project: Example/ColorPicker.xcodeproj
+xcode_workspace: Example/ColorPicker.xcworkspace
 xcode_scheme: Progress.swift
 
 script:
-- xcodebuild -project Example/ColorPicker.xcodeproj -scheme ColorPicker -enableCodeCoverage YES clean build test | xcpretty
+- xcodebuild -workspace Example/ColorPicker.xcworkspace -scheme ColorPicker -enableCodeCoverage YES clean build test | xcpretty
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
