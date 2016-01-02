@@ -5,7 +5,7 @@ install:
   - gem install xcpretty
 
 xcode_workspace: Example/ColorPicker.xcworkspace
-xcode_scheme: Progress.swift
+xcode_scheme: ColorPicker
 
 script:
 - xcodebuild -workspace Example/ColorPicker.xcworkspace -scheme ColorPicker -enableCodeCoverage YES clean build test | xcpretty
