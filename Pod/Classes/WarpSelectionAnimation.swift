@@ -10,40 +10,40 @@ class WarpSelectionAnimation: ColorPickerSelection {
     
     var selectedRingView: UIView = {
         let view = UIView()
-        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
+        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").cgColor
         view.layer.borderWidth = 2
         return view
     }()
     
     var tempRingView: UIView =  {
         let view = UIView()
-        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
+        view.layer.borderColor = UIColor.colorWithHexString("39B0B8").cgColor
         view.layer.borderWidth = 2
         return view
     }()
     
-    func colorPicker(colorPicker: ColorPickerListView, changeFromIndex: Int, toIndex: Int) {
+    func colorPicker(_ colorPicker: ColorPickerListView, changeFromIndex: Int, toIndex: Int) {
         self.colorPicker(colorPicker, deselectedAtIndex: changeFromIndex, ringView: selectedRingView)
         self.colorPicker(colorPicker, selectedAtIndex: toIndex, ringView: tempRingView)
         self.selectedRingView = self.tempRingView
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.4 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
+        let delayTime = DispatchTime.now() + Double(Int64(0.4 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
             self.selectedRingView = self.tempRingView
             self.tempRingView = UIView()
-            self.tempRingView.layer.borderColor = UIColor.colorWithHexString("39B0B8").CGColor
+            self.tempRingView.layer.borderColor = UIColor.colorWithHexString("39B0B8").cgColor
             self.tempRingView.layer.borderWidth = 2
         }
     }
     
-    func colorPicker(colorPicker: ColorPickerListView, selectedAtIndex: Int) {
+    func colorPicker(_ colorPicker: ColorPickerListView, selectedAtIndex: Int) {
         self.colorPicker(colorPicker, selectedAtIndex: selectedAtIndex, ringView: selectedRingView)
     }
     
-    func colorPicker(colorPicker: ColorPickerListView, deselectAtIndex: Int) {
+    func colorPicker(_ colorPicker: ColorPickerListView, deselectAtIndex: Int) {
         self.colorPicker(colorPicker, deselectedAtIndex: deselectAtIndex, ringView: selectedRingView)
     }
     
-    func colorPickerPickerLayoutSubviews(colorPicker: ColorPickerListView) {
+    func colorPickerPickerLayoutSubviews(_ colorPicker: ColorPickerListView) {
         guard let selectedButton = colorPicker.selectedButton else {
             return
         }
@@ -51,7 +51,7 @@ class WarpSelectionAnimation: ColorPickerSelection {
         selectedRingView.center = selectedButton.center
     }
     
-    private func frameFor(buttonFrame: CGRect) -> CGRect {
+    fileprivate func frameFor(_ buttonFrame: CGRect) -> CGRect {
         var ringFrame = buttonFrame
         ringFrame.size.height = ringFrame.size.height + 7
         ringFrame.size.width = ringFrame.size.width + 7
@@ -59,31 +59,31 @@ class WarpSelectionAnimation: ColorPickerSelection {
         return ringFrame
     }
     
-    private func colorPicker(colorPicker: ColorPickerListView, selectedAtIndex: Int, ringView: UIView) {
-        colorPicker.userInteractionEnabled = false;
+    fileprivate func colorPicker(_ colorPicker: ColorPickerListView, selectedAtIndex: Int, ringView: UIView) {
+        colorPicker.isUserInteractionEnabled = false;
         let button = colorPicker.colorButtonAt(selectedAtIndex)
         ringView.frame = frameFor(button.roundShape.frame)
         ringView.center = button.center
-        let width = CGRectGetWidth(ringView.frame)
-        let height = CGRectGetHeight(ringView.frame)
+        let width = ringView.frame.width
+        let height = ringView.frame.height
         ringView.layer.cornerRadius = width < height ? width / 2.0 : height / 2.0;
-        colorPicker.insertSubview(ringView, atIndex: 0)
-        ringView.transform = CGAffineTransformMakeScale(0.001, 0.001)
-        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: .CurveEaseIn, animations: { () -> Void in
-            ringView.transform = CGAffineTransformIdentity
+        colorPicker.insertSubview(ringView, at: 0)
+        ringView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: .curveEaseIn, animations: { () -> Void in
+            ringView.transform = CGAffineTransform.identity
             }) { (isFinished) -> Void in
-                colorPicker.userInteractionEnabled = true
+                colorPicker.isUserInteractionEnabled = true
         }
     }
     
-    private func colorPicker(colorPicker: ColorPickerListView, deselectedAtIndex: Int, ringView: UIView) {
-        colorPicker.userInteractionEnabled = false
-        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: .CurveEaseIn, animations: { () -> Void in
-            ringView.transform = CGAffineTransformMakeScale(0.001, 0.001)
+    fileprivate func colorPicker(_ colorPicker: ColorPickerListView, deselectedAtIndex: Int, ringView: UIView) {
+        colorPicker.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 0, options: .curveEaseIn, animations: { () -> Void in
+            ringView.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
             }) { (isFinished) -> Void in
                     ringView.removeFromSuperview()
-                    ringView.transform = CGAffineTransformIdentity
-                    colorPicker.userInteractionEnabled = true
+                    ringView.transform = CGAffineTransform.identity
+                    colorPicker.isUserInteractionEnabled = true
         }
     }
 }

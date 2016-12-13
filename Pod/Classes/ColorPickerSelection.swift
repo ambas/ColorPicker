@@ -7,8 +7,8 @@
 //
 
 protocol ColorPickerSelection {
-    func colorPicker(colorPicker: ColorPickerListView, changeFromIndex: Int, toIndex: Int)
-    func colorPicker(colorPicker: ColorPickerListView, selectedAtIndex: Int)
-    func colorPicker(colorPicker: ColorPickerListView, deselectAtIndex: Int)
-    func colorPickerPickerLayoutSubviews(colorPicker: ColorPickerListView)
+    func colorPicker(_ colorPicker: ColorPickerListView, changeFromIndex: Int, toIndex: Int)
+    func colorPicker(_ colorPicker: ColorPickerListView, selectedAtIndex: Int)
+    func colorPicker(_ colorPicker: ColorPickerListView, deselectAtIndex: Int)
+    func colorPickerPickerLayoutSubviews(_ colorPicker: ColorPickerListView)
 }

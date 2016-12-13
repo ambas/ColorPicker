@@ -9,30 +9,30 @@
 import UIKit
 
 public protocol ColorPickerDelegate {
-    func colorPicker(colorPicker: ColorPickerListView, selectedColor: String)
-    func colorPicker(colorPicker: ColorPickerListView, deselectedColor: String)
+    func colorPicker(_ colorPicker: ColorPickerListView, selectedColor: String)
+    func colorPicker(_ colorPicker: ColorPickerListView, deselectedColor: String)
 }
 
 @IBDesignable
 
-public class ColorPickerListView: UIScrollView {
+open class ColorPickerListView: UIScrollView {
     
-    @IBInspectable public var alignment: String = "left" {
+    @IBInspectable open var alignment: String = "left" {
         didSet {
             layoutIfNeeded()
             setNeedsLayout()
         }
     }
-    @IBInspectable public var allowsDeselection: Bool = true
+    @IBInspectable open var allowsDeselection: Bool = true
     var selectedButton: ColorPickerButton?
     var colorSelectionAnimation = WarpSelectionAnimation()
-    public var colorPickerDelegate: ColorPickerDelegate?
+    open var colorPickerDelegate: ColorPickerDelegate?
     
-    private lazy var colorPickerButtons: [ColorPickerButton] = { [unowned self] in
+    fileprivate lazy var colorPickerButtons: [ColorPickerButton] = { [unowned self] in
       return self.colors.map(ColorPickerButton.init)
     }()
     
-    public var colors = ["#C885D0", "#3CAEE2", "#5EB566", "#FAC16C", "#FA787F", "#A56250"] {
+    open var colors = ["#C885D0", "#3CAEE2", "#5EB566", "#FAC16C", "#FA787F", "#A56250"] {
         didSet {
             for button in colorPickerButtons {
                 if button == selectedButton {
@@ -60,70 +60,70 @@ public class ColorPickerListView: UIScrollView {
         configureView()
     }
     
-    public override func prepareForInterfaceBuilder() {
+    open override func prepareForInterfaceBuilder() {
        configureView() 
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
-        for (index, button) in self.colorPickerButtons.enumerate() {
-            frame = CGRect(origin: CGPointZero, size: self.bounds.size)
-            contentInset = UIEdgeInsetsZero
+        for (index, button) in self.colorPickerButtons.enumerated() {
+            frame = CGRect(origin: CGPoint.zero, size: self.bounds.size)
+            contentInset = UIEdgeInsets.zero
             let x: CGFloat
-            if (alignment.lowercaseString == "left") {
-                x = CGRectGetHeight(self.frame) * CGFloat(index)
-            } else if(alignment.lowercaseString == "right") {
-                let leftPadding = max(CGFloat(CGRectGetWidth(self.frame)) - CGFloat(CGRectGetHeight(self.frame) * CGFloat(colors.count)), 0.0)
-                x = (CGRectGetHeight(self.frame) * CGFloat(index)) + leftPadding
+            if (alignment.lowercased() == "left") {
+                x = self.frame.height * CGFloat(index)
+            } else if(alignment.lowercased() == "right") {
+                let leftPadding = max(CGFloat(self.frame.width) - CGFloat(self.frame.height * CGFloat(colors.count)), 0.0)
+                x = (self.frame.height * CGFloat(index)) + leftPadding
             } else {
-                let leftPadding = max(CGFloat(CGRectGetWidth(self.frame)) - CGFloat(CGRectGetHeight(self.frame) * CGFloat(colors.count)), 0.0) / 2
-                x = CGRectGetHeight(self.frame) * CGFloat(index) + leftPadding
+                let leftPadding = max(CGFloat(self.frame.width) - CGFloat(self.frame.height * CGFloat(colors.count)), 0.0) / 2
+                x = self.frame.height * CGFloat(index) + leftPadding
             }
-            button.frame = CGRect(x: x, y: 0, width: CGRectGetHeight(self.frame), height: CGRectGetHeight(self.frame))
+            button.frame = CGRect(x: x, y: 0, width: self.frame.height, height: self.frame.height)
         }
-        contentSize = CGSize(width: CGRectGetHeight(self.frame) * CGFloat(colors.count), height: CGRectGetHeight(self.frame))
+        contentSize = CGSize(width: self.frame.height * CGFloat(colors.count), height: self.frame.height)
         colorSelectionAnimation.colorPickerPickerLayoutSubviews(self)
     }
     
-    func colorAt(index: Int) -> String? {
+    func colorAt(_ index: Int) -> String? {
         return  self.colorPickerButtons[index].pickerColor()
     }
     
-    func colorButtonAt(index: Int) -> ColorPickerButton {
+    func colorButtonAt(_ index: Int) -> ColorPickerButton {
         return self.colorPickerButtons[index]
     }
     
-    private func configureView() {
+    fileprivate func configureView() {
         self.colorPickerButtons.forEach(self.addSubview)
         for pickerButton in colorPickerButtons {
             self.addSubview(pickerButton)
-             pickerButton.addTarget(self, action: "selectColorButton:", forControlEvents: .TouchUpInside)
+             pickerButton.addTarget(self, action: #selector(ColorPickerListView.selectColorButton(_:)), for: .touchUpInside)
         }
     }
     
-    func selectColor(colorHex: String) {
-        guard let indexButton = colors.indexOf(colorHex) else {
+    func selectColor(_ colorHex: String) {
+        guard let indexButton = colors.index(of: colorHex) else {
            assertionFailure("Wrong Hex color format for \(colorHex)")
            return
         }
         selectButtonAtIndex(indexButton)
     }
     
-    func selectButtonAtIndex(index: Int) {
+    func selectButtonAtIndex(_ index: Int) {
        let button = colorPickerButtons[index]
         selectColorButton(button)
     }
     
-    func selectColorButton(colorPickerButton: ColorPickerButton) {
-        let colorPickerButtonIndex = colorPickerButtons.indexOf(colorPickerButton)!
-        if let selectedButton = self.selectedButton where allowsDeselection && colorPickerButtons.indexOf(selectedButton)! ==  colorPickerButtonIndex {
+    func selectColorButton(_ colorPickerButton: ColorPickerButton) {
+        let colorPickerButtonIndex = colorPickerButtons.index(of: colorPickerButton)!
+        if let selectedButton = self.selectedButton, allowsDeselection && colorPickerButtons.index(of: selectedButton)! ==  colorPickerButtonIndex {
             self.selectedButton = nil
             colorSelectionAnimation.colorPicker(self, deselectAtIndex: colorPickerButtonIndex)
              colorPickerDelegate?.colorPicker(self, deselectedColor: colors[colorPickerButtonIndex])
-        } else if let selectedButton = self.selectedButton where colorPickerButtons.indexOf(selectedButton)! ==  colorPickerButtonIndex {
+        } else if let selectedButton = self.selectedButton, colorPickerButtons.index(of: selectedButton)! ==  colorPickerButtonIndex {
             // Do noting for this case
-        } else if let selectedButton = self.selectedButton where colorPickerButtons.indexOf(selectedButton)! !=  colorPickerButtonIndex {
-            colorSelectionAnimation.colorPicker(self, changeFromIndex: colorPickerButtons.indexOf(selectedButton)! , toIndex: colorPickerButtonIndex)
+        } else if let selectedButton = self.selectedButton, colorPickerButtons.index(of: selectedButton)! !=  colorPickerButtonIndex {
+            colorSelectionAnimation.colorPicker(self, changeFromIndex: colorPickerButtons.index(of: selectedButton)! , toIndex: colorPickerButtonIndex)
             self.selectedButton = colorPickerButton
             colorPickerDelegate?.colorPicker(self, selectedColor: colors[colorPickerButtonIndex])
         }

@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class ColorPickerButton: UIButton {
+open class ColorPickerButton: UIButton {
     
     let roundShape = CAShapeLayer()
     var radius: Double  = 0 {
         didSet {
-            roundShape.path = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).CGPath
+            roundShape.path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).cgPath
             roundShape.frame = CGRect(x: 0, y: 0, width: radius*2, height: radius*2)
         }
     }
-    var color: UIColor = UIColor.blackColor() {
+    var color: UIColor = UIColor.black {
         didSet {
-            roundShape.fillColor = color.CGColor
+            roundShape.fillColor = color.cgColor
         }
     }
     
@@ -30,15 +30,15 @@ public class ColorPickerButton: UIButton {
     }
     
     convenience public init(color: UIColor, radius: Double) {
-        self.init(frame: CGRectZero, color: color, radius: radius)
+        self.init(frame: CGRect.zero, color: color, radius: radius)
     }
     
     convenience public init(color: UIColor) {
-        self.init(frame: CGRectZero, color: color, radius: ButtonCofiguration.pickerButtonRadius)
+        self.init(frame: CGRect.zero, color: color, radius: ButtonCofiguration.pickerButtonRadius)
     }
     
     convenience public init(colorHex: String) {
-       self.init(frame: CGRectZero, color: UIColor.colorWithHexString(colorHex), radius: ButtonCofiguration.pickerButtonRadius)
+       self.init(frame: CGRect.zero, color: UIColor.colorWithHexString(colorHex), radius: ButtonCofiguration.pickerButtonRadius)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -46,16 +46,16 @@ public class ColorPickerButton: UIButton {
         configureShape(radius, color: color)
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
-        roundShape.fillColor = color.CGColor
-        roundShape.path = UIBezierPath(ovalInRect: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).CGPath
+        roundShape.fillColor = color.cgColor
+        roundShape.path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: radius*2, height: radius*2)).cgPath
         roundShape.bounds.size = CGSize(width: radius*2, height: radius*2)
         let center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         roundShape.position = center
     }
     
-    private func configureShape(radius: Double, color: UIColor) {
+    fileprivate func configureShape(_ radius: Double, color: UIColor) {
         self.radius = radius
         self.color = color
     }
@@ -66,6 +66,6 @@ public class ColorPickerButton: UIButton {
         guard let aShapeColor = shapeColor else {
             return "#000"
         }
-        return UIColor(CGColor: aShapeColor).hexString()
+        return UIColor(cgColor: aShapeColor).hexString()
     }
 }

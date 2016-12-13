@@ -16,27 +16,27 @@ class ColorPickerButtonSpec: QuickSpec {
         var colorPickerListView: ColorPickerListView!
         
         beforeEach { () -> () in
-            colorPickerListView = ColorPickerListView(frame: CGRectZero, colors: colors)
+            colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: colors)
         }
         
         describe("test button appreance") {
             
             it("shoud have same colors") {
                 print(colorPickerListView)
-                 colorPickerListView = ColorPickerListView(frame: CGRectZero, colors: colors)
+                 colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: colors)
                 let testColorIndex = 0
-                print(colorPickerListView.colorAt(testColorIndex))
+                
                 expect(colorPickerListView.colorAt(testColorIndex)!) == colors[testColorIndex]
             }
             
             it("should error for wrong color format") {
                 let sampleWrongColor1 = ["1234", "ZZ45F4"]
-                colorPickerListView = ColorPickerListView(frame: CGRectZero, colors: sampleWrongColor1)
+                colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: sampleWrongColor1)
                 let testColorIndex = 0
                 expect(colorPickerListView.colorAt(testColorIndex)!) == "#000"
                 
                 let sampleWrongColor2 = ["#ZZZZZZ", "#ZZZZZZ"]
-                colorPickerListView = ColorPickerListView(frame: CGRectZero, colors: sampleWrongColor2)
+                colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: sampleWrongColor2)
                 expect(colorPickerListView.colorAt(testColorIndex)!) == "#000"
             }
             
@@ -49,7 +49,7 @@ class ColorPickerButtonSpec: QuickSpec {
             it("should have shape inside button"){
                 let radius = 10.0
                 let sampleRect = CGRect(x: 0, y: 0, width: 44, height: 44)
-                let colorPickerButton = ColorPickerButton(frame: sampleRect, color: UIColor.redColor(), radius: radius)
+                let colorPickerButton = ColorPickerButton(frame: sampleRect, color: .red, radius: radius)
                 expect(colorPickerButton.roundShape.frame) == CGRect(x: 0, y: 0, width: 20, height: 20)
             }
             
@@ -63,14 +63,14 @@ class ColorPickerButtonSpec: QuickSpec {
             }
             
             it("should have correct button when create button with color and radius") {
-                let colorPickerButton = ColorPickerButton(color: UIColor.redColor(), radius: 20)
-                expect(UIColor(CGColor: colorPickerButton.roundShape.fillColor!).hexString()) == UIColor.redColor().hexString()
+                let colorPickerButton = ColorPickerButton(color: .red, radius: 20)
+                expect(UIColor(cgColor: colorPickerButton.roundShape.fillColor!).hexString()) == UIColor.red.hexString()
                 expect(colorPickerButton.radius) == 20
             }
             
             it("should have correct button when create button with color") {
-                let colorPickerButton = ColorPickerButton(color: UIColor.redColor())
-                expect(UIColor(CGColor: colorPickerButton.roundShape.fillColor!).hexString()) == UIColor.redColor().hexString()
+                let colorPickerButton = ColorPickerButton(color: .red)
+                expect(UIColor(cgColor: colorPickerButton.roundShape.fillColor!).hexString()) == UIColor.red.hexString()
                 expect(colorPickerButton.radius) == ButtonCofiguration.pickerButtonRadius
             }
             
