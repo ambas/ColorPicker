@@ -61,11 +61,7 @@ open class ColorPickerButton: UIButton {
     }
     
     func pickerColor() -> String {
-        let shapeColor = roundShape.fillColor
-        print(shapeColor)
-        guard let aShapeColor = shapeColor else {
-            return "#000"
-        }
-        return UIColor(cgColor: aShapeColor).hexString()
+        let shapeColor = roundShape.fillColor ?? UIColor.black.cgColor
+        return UIColor(cgColor: shapeColor).hexString()
     }
 }
