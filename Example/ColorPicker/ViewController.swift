@@ -21,7 +21,7 @@ class ViewController: UIViewController, ColorPickerDelegate {
         colorPicker.colorPickerDelegate = self
     }
     
-    @IBAction func didChangeAlignMent(alignmentOption: UISegmentedControl) {
+    @IBAction func didChangeAlignMent(_ alignmentOption: UISegmentedControl) {
         switch alignmentOption.selectedSegmentIndex {
         case 0:
             colorPicker.alignment = "left"
@@ -34,30 +34,30 @@ class ViewController: UIViewController, ColorPickerDelegate {
         }
     }
     
-    @IBAction func addColor(sender: AnyObject) {
+    @IBAction func addColor(_ sender: AnyObject) {
         var colors = colorPicker.colors
         colors.append("#5EB566")
         colorPicker.colors = colors
     }
     
-    @IBAction func removeColor(sender: AnyObject) {
+    @IBAction func removeColor(_ sender: AnyObject) {
         var colors = colorPicker.colors
         colors.popLast()
         colorPicker.colors = colors
     }
     
-    func colorPicker(colorPicker: ColorPickerListView, selectedColor: String) {
+    func colorPicker(_ colorPicker: ColorPickerListView, selectedColor: String) {
         colorView.backgroundColor = UIColor.colorWithHexString(selectedColor)
     }
     
-    func colorPicker(colorPicker: ColorPickerListView, deselectedColor: String) {
-        colorView.backgroundColor = UIColor.whiteColor()
+    func colorPicker(_ colorPicker: ColorPickerListView, deselectedColor: String) {
+        colorView.backgroundColor = UIColor.white
     }
     
 
     
-    @IBAction func changeAllowDeselect(allowDeselectSwitch: UISwitch) {
-       colorPicker.allowsDeselection = allowDeselectSwitch.on
+    @IBAction func changeAllowDeselect(_ allowDeselectSwitch: UISwitch) {
+       colorPicker.allowsDeselection = allowDeselectSwitch.isOn
     }
 }
 
