@@ -26,18 +26,18 @@ class ColorPickerButtonSpec: QuickSpec {
                  colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: colors)
                 let testColorIndex = 0
                 
-                expect(colorPickerListView.colorAt(testColorIndex)!) == colors[testColorIndex]
+                expect(colorPickerListView.colorAt(testColorIndex)) == colors[testColorIndex]
             }
             
             it("should error for wrong color format") {
                 let sampleWrongColor1 = ["1234", "ZZ45F4"]
                 colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: sampleWrongColor1)
                 let testColorIndex = 0
-                expect(colorPickerListView.colorAt(testColorIndex)!) == "#000"
+                expect(colorPickerListView.colorAt(testColorIndex)).to(beNil())
                 
                 let sampleWrongColor2 = ["#ZZZZZZ", "#ZZZZZZ"]
                 colorPickerListView = ColorPickerListView(frame: CGRect.zero, colors: sampleWrongColor2)
-                expect(colorPickerListView.colorAt(testColorIndex)!) == "#000"
+                expect(colorPickerListView.colorAt(testColorIndex)).to(beNil())
             }
             
             it("shoud return black color when shape no color") {

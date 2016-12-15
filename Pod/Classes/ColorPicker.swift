@@ -86,7 +86,7 @@ open class ColorPickerListView: UIScrollView {
     }
     
     func colorAt(_ index: Int) -> String? {
-        return  self.colorPickerButtons[index].pickerColor()
+        return  colors[index].validateHexColorFormat()
     }
     
     func colorButtonAt(_ index: Int) -> ColorPickerButton {

@@ -38,7 +38,7 @@ open class ColorPickerButton: UIButton {
     }
     
     convenience public init(colorHex: String) {
-       self.init(frame: CGRect.zero, color: UIColor.colorWithHexString(colorHex), radius: ButtonCofiguration.pickerButtonRadius)
+       self.init(frame: CGRect.zero, color: UIColor.colorWithHexString(colorHex) ?? .black, radius: ButtonCofiguration.pickerButtonRadius)
     }
 
     required public init?(coder aDecoder: NSCoder) {
