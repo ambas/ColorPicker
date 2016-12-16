@@ -12,7 +12,7 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
-- swift 2.0+
+- swift 3.0+
 
 ## Installation
 
